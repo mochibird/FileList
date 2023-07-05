@@ -34,7 +34,7 @@ function caliculateTotalSales(array $breadSalesDetail):int
     return floor($totalWithoutTax * 1.1);
 }
 
-function display(array $breadSalesDetail){
+function display(array $breadSalesDetail): void{
     $totalSales = caliculateTotalSales($breadSalesDetail);
     echo $totalSales . PHP_EOL;
     $countLank = [];
