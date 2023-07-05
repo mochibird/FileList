@@ -1,0 +1,41 @@
+function getInput(): array{
+    $argument = array_slice($_SERVER['argv'], 1);
+
+    return array_chunk($argument, 2);
+}
+
+function channelViewingPeriods(array $inputs): array{
+    $channelViewingPeriods = [];
+    foreach($inputs as $input){
+        $chan = $input[0];
+        $min = $input[1];
+        $mins = [$min];
+        //下記をなくすと配列と配列の合体がarray_mergeなのですでに配列がない$channelViewingPeriods[$chan]でエラーが起こる
+        if(array_key_exists($chan, $channelViewingPeriods)){
+            $mins = array_merge($channelViewingPeriods[$chan], $mins);
+        }
+        $channelViewingPeriods[$chan] = $mins;
+    }
+    return $channelViewingPeriods;
+}
+function calculateTotalHour(array $channelViewingPeriods): float{
+        $viewingTimes = [];
+        foreach($channelViewingPeriods as $period){
+        // 多分こうするためだと思う[[30, 15], [25], [30]] >>> [30, 15, 25, 30]。 それで下で行われているのが空([])の配列の$viewingTimesと[30, 15], [25], [30]の合体をループして行っている
+        $viewingTimes = array_merge($viewingTimes, $period);
+    }
+    $totalMins = array_sum($viewingTimes);
+    return round($totalMins / 60, 1);
+}
+
+function display($channelViewingPeriods){
+    $totalHour = calculateTotalHour($channelViewingPeriods);
+    echo $totalHour . PHP_EOL;
+    foreach($channelViewingPeriods as $chan => $mins){
+        echo $chan . ' ' .  array_sum($mins) . ' ' . count($mins) . PHP_EOL;
+    }
+}
+
+$getInput = getInput();
+$channelViewingPeriods = channelViewingPeriods($getInput);
+display($channelViewingPeriods);
