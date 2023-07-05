@@ -11,6 +11,7 @@ function channelViewingPeriods(array $inputs): array{
         $min = $input[1];
         $mins = [$min];
         //下記をなくすと配列と配列の合体がarray_mergeなのですでに配列がない$channelViewingPeriods[$chan]でエラーが起こる
+           すでにある$channelViewingPeriods[$chan]の配列と新たな$minsの配列で結合して$channelViewingPeriods[$chan] = $mins;を塗り替えて更新している
         if(array_key_exists($chan, $channelViewingPeriods)){
             $mins = array_merge($channelViewingPeriods[$chan], $mins);
         }
@@ -39,3 +40,4 @@ function display($channelViewingPeriods){
 $getInput = getInput();
 $channelViewingPeriods = channelViewingPeriods($getInput);
 display($channelViewingPeriods);
+
