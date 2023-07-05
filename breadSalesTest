@@ -1,0 +1,57 @@
+// [num => [price, sale], num => [price, sale]];
+
+
+const SPLIT_LENGTH = 2;
+function getInput(): array
+{
+    $argument = array_slice($_SERVER['argv'], 1);
+
+    return array_chunk($argument, SPLIT_LENGTH);
+}
+
+const NUMBER_PULL = 1;
+function breadSalesDetail(array $inputs): array
+{
+    $breadSalesDetail = [];
+    $price = [100, 120, 150, 250, 80, 120, 100, 180, 50, 300];
+    $prices = array_chunk($price, 1);
+    foreach ($inputs as $input) {
+        $num = $input[0];
+        $count = $input[1];
+        $counts = [$count];
+        $breadSalesDetail[$num] = array_merge($prices[$num - NUMBER_PULL], $counts);
+    }
+    return $breadSalesDetail;
+}
+
+function caliculateTotalSales(array $breadSalesDetail):int
+{
+    $products = [];
+    foreach ($breadSalesDetail as $sale) {
+        $products[] =  array_product($sale);
+    }
+    $totalWithoutTax = array_sum($products);
+    return floor($totalWithoutTax * 1.1);
+}
+
+function display(array $breadSalesDetail){
+    $totalSales = caliculateTotalSales($breadSalesDetail);
+    echo $totalSales . PHP_EOL;
+    $countLank = [];
+    foreach($breadSalesDetail as $num => $count){
+        $countLank[$num] =  $count[1];
+    }
+    $maxValue = max($countLank);
+    $maxkeys = array_keys($countLank, $maxValue);
+    $maxstring = implode(' ', $maxkeys);
+    echo $maxstring . PHP_EOL;
+
+    $minValue = min($countLank);
+    $minkeys = array_keys($countLank, $minValue);
+    $minstring = implode(' ', $minkeys);
+    echo $minstring . PHP_EOL;
+
+}
+$getInput = getInput();
+$breadSalesDetail = breadSalesDetail($getInput);
+display($breadSalesDetail);
