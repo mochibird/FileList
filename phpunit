@@ -1,0 +1,70 @@
+PHPUnitに関する知識
+テストクラス名
+テスト対象クラス名Test という名前のクラスにします。例えば、テスト対象クラス名が User の場合、テストクラス名は UserTest とします。
+
+テストメソッド名
+テストメソッドであることを示すには、２通りの方法があります。
+
+メソッド名に test という接頭辞をつける。
+@testアノテーション を利用する。
+アサーション
+条件判定用メソッドです。
+
+アサーションメソッドを利用して、以下のような判定を行います。
+
+メソッドの戻り値の「型」や「内容」の判定
+メソッドを実行したことによる状態変化(DB、セッション、キャッシュ、ログなど)の判定
+アサーションメソッド	概要
+assertEquals($exp, $act)	$expと$actが等しい(==)
+assertSame($exp, $act)	$expと$actが等しい(===)
+assertNotEquals($exp, $act)	$expと$actが等しくない
+assertContains(mixed $needle, Iterator	array $haystack)
+assertArrayHasKey(mixed $key, array $array)	配列にキーが含まれている
+assertTrue($cond)	$condがTRUE
+assertFalse($cond)	$condがFALSE
+assertNull($var)	$varがNULL
+assertNotNull($var)	$varがNULLではない
+assertInternalType($type, $act)	$actの型が$typeと一致する
+assertInstanceOf($expected, $actual)	$actualが$expectedのインスタンスである
+この他のアサーションは、下記リンクから確認できます。
+⇒ https://phpunit.de/manual/5.5/ja/appendixes.assertions.html
+
+いろいろありますが、使うのは限られるかと思います。
+
+例外テスト
+正しく例外がスローされたかどうかを判定します。
+@expectedExceptionアノテーションなど利用します。
+
+テスト依存性
+あるテストの結果をもとに、別のテストを実施することができます。
+@dependsアノテーションを利用します。
+
+データプロバイダ
+複数のテストデータパターンでテストできます。
+@dataProviderアノテーションを利用します。
+
+フィクスチャ
+setUpメソッド
+テスト実行前に実行されるメソッドです。
+tearDownメソッド
+テスト実行後に実行されるメソッドです。
+リフレクション
+プライベートメソッドを外部アクセス可能にしてくれます。
+ReflectionMethodクラスを利用します。
+
+XML設定ファイル
+テスト設定ファイルです。例えば、次のような設定が可能です。
+
+設定	概要
+colors	結果を色表示するか指定
+bootstrap	テスト前に実行させるPHPファイルを指定
+stopOnFailure	あるテストに失敗したら残りのテストはキャンセルするか指定
+testsuite	どのディレクトリにテストが存在するかなど指定
+この他の設定は、下記リンクから確認できます。
+⇒ https://phpunit.de/manual/5.5/ja/appendixes.configuration.html
+
+XML設定ファイルは、phpunitコマンドの--configurationオプションで指定できます。
+
+
+phpunit --configuration XML設定ファイル
+--configurationオプションを指定しない場合、カレントディレクトリから phpunit.xml phpunit.xml.dist を順に探し、存在する場合はそれを自動的に読み込みます。
