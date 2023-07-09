@@ -15,6 +15,7 @@ PHPUnitに関する知識
 メソッドの戻り値の「型」や「内容」の判定
 メソッドを実行したことによる状態変化(DB、セッション、キャッシュ、ログなど)の判定
 アサーションメソッド	概要
+expectOutputString()     予期される出力を設定する方法を示す例が2.7に示されています。この予期される出力が生成されない場合、テストは失敗としてカウントされます。
 assertEquals($exp, $act)	$expと$actが等しい(==)
 assertSame($exp, $act)	$expと$actが等しい(===)
 assertNotEquals($exp, $act)	$expと$actが等しくない
